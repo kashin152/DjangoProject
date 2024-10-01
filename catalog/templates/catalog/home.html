@@ -1,25 +1,16 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Skystore</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
-
-</head>
-<body>
-{% include 'includes/inc_menu.html'%}
-
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Skystore</h1>
-    <p class="lead">Skystore - это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели
-        продать</p>
-</div>
+{% extends 'catalog/home.html'%}
+{% load my_tags %}
+{% include 'catalog/includes/inc_menu.html'%}
 {% block content %}
-{% endblock %}
-{% include 'includes/footer.html'%}
-
 </div>
-<script type="text/javascript" src="/static/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <div class="container mt-5">
+        <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{ product.name  }} {{ product.price }}</h5>
+      <img src="{{ product.image| media_filter }}" class="card-img-top" alt="{{ product.name }}">
+    <p class="card-text">{{ product.description }}</p>
+    <a href="#" class="btn btn-primary">Купить</a>
+  </div>
+</div>
+{% endblock %}
+{% include 'catalog/includes/footer.html'%}
