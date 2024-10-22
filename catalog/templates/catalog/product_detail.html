@@ -1,6 +1,6 @@
-{% extends 'home.html'%}
+{% extends 'catalog/home.html'%}
 {% load my_tags %}
-{% include 'includes/inc_menu.html'%}
+{% include 'catalog/includes/inc_menu.html'%}
 {% block content %}
 </div>
     <div class="container mt-5">
@@ -9,8 +9,9 @@
     <h5 class="card-title">{{ product.name  }} {{ product.price }}</h5>
       <img src="{{ product.image| media_filter }}" class="card-img-top" alt="{{ product.name }}">
     <p class="card-text">{{ product.description }}</p>
-    <a href="#" class="btn btn-primary">Купить</a>
+    <a href="{% url 'catalog:product_update' product.id %}" class="btn btn-primary">редактировать</a>
+      <a href="{% url 'catalog:product_delete' product.id %}" class="btn btn-danger">удалить</a>
   </div>
 </div>
 {% endblock %}
-{% include 'includes/footer.html'%}
+{% include 'catalog/includes/footer.html'%}
