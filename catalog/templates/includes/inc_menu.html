@@ -8,7 +8,7 @@
         </nav>
     </div>
     <div class="ms-auto">  <!-- Контейнер для кнопок справа -->
-        {% if users.is_authenticated %}
+        {% if user.is_authenticated %}
         <form method="post" action="{% url 'users:logout' %}" class="d-inline">
             {% csrf_token %}
             <button type="submit" class="p-2 btn btn-outline-primary">Выйти</button>

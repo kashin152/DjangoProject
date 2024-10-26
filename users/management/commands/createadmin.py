@@ -7,8 +7,6 @@ class Command(BaseCommand):
 
         user = CustomsUser.objects.create(
             email='test@mail.ru',
-            first_name='admin',
-            last_name='admin'
         )
 
         user.set_password('1234')
@@ -19,4 +17,4 @@ class Command(BaseCommand):
 
         user.save()
 
-        self.stdout.write(self.style.SUCCESS(f'Successfully created admin user with email {user.email}!'))
+
