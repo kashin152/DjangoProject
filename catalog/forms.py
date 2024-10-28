@@ -6,7 +6,7 @@ from catalog.models import Product
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = "__all__"
+        exclude = ["created_at", "updated_at", "owner"]
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
@@ -80,3 +80,11 @@ class ProductForm(forms.ModelForm):
             return image
         else:
             raise forms.ValidationError("Изображение должно быть указано.")
+
+
+class ProductModeratorForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Product
+        fields = ["status"]
