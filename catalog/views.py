@@ -1,7 +1,7 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import (
@@ -68,15 +68,14 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         raise PermissionDenied
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
     model = Product
     template_name = "catalog/product_delete.html"
     success_url = reverse_lazy("catalog:home")
 
-    def get_form_class(self):
-        user = self.request.user
-        if user == self.object.owner:
-            return ProductForm
-        if user.has_perm("catalog.can_delete_product"):
-            return ProductModeratorForm
-        raise PermissionDenied
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.has_perm('catalog.delete_product')
+
+    def handle_no_permission(self):
+
+        return redirect('catalog:category_list')

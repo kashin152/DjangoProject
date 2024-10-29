@@ -51,7 +51,8 @@ class Product(models.Model):
         verbose_name_plural = "продукты"
         ordering = ["name"]
         permissions = [
-            ("can_unpublish_product", "can_delete_product"),
+            ("can_unpublish_product", "can unpublish product"),
+            ("can_delete_product", "can delete product")
         ]
 
 
