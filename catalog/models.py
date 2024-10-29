@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import BooleanField
+from users.models import CustomsUser
 
 
 class Category(models.Model):
@@ -32,6 +34,14 @@ class Product(models.Model):
     updated_at = models.DateField(
         auto_now=True, verbose_name="Дата последнего изменения"
     )
+    owner = models.ForeignKey(
+        CustomsUser,
+        verbose_name="Владелец",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+    status = models.BooleanField(default=False, verbose_name="Статус публикации")
 
     def __str__(self):
         return self.name
@@ -40,3 +50,17 @@ class Product(models.Model):
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
         ordering = ["name"]
+        permissions = [
+            ("can_unpublish_product", "can unpublish product"),
+            ("can_delete_product", "can delete product")
+        ]
+
+
+class StyleFormMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for fild_name, fild in self.fields.items():
+            if isinstance(fild, BooleanField):
+                fild.widget.attrs["class"] = "form-check-input"
+            else:
+                fild.widget.attrs["class"] = "form-control"
